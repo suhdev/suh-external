@@ -1,0 +1,20 @@
+[
+  {
+    "path": "api/SuhExternal",
+    "titleWords": "SuhExternal",
+    "keywords": "api connect documentation external finish html libraries module partials suhexternal to",
+    "members": ""
+  },
+  {
+    "path": "api/SuhExternal/service/shGoogleMaps",
+    "titleWords": "shGoogleMaps",
+    "keywords": "api connect factory google html maps module partials service shgooglemaps suhexternal to",
+    "members": ""
+  },
+  {
+    "path": "api/SuhExternal/service",
+    "titleWords": "service components in SuhExternal",
+    "keywords": "api componentgroup components html in module partials service suhexternal",
+    "members": ""
+  }
+]

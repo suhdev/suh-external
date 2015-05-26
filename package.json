@@ -1,0 +1,30 @@
+{
+  "name": "suh-external",
+  "version": "1.0.0",
+  "description": "An angular module to integrate angular apps with external libraries such Google Maps, Google Plus, Facebook, and Google Analytics. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suhdev/suh-external.git"
+  },
+  "keywords": [
+    "google",
+    "maps",
+    "google",
+    "plus",
+    "google",
+    "analytics",
+    "facebook",
+    "open",
+    "graph"
+  ],
+  "author": "Suhail Abood <suhail.abood@gmail.com> (suhailabood.me)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suhdev/suh-external/issues"
+  },
+  "homepage": "https://github.com/suhdev/suh-external#readme"
+}
