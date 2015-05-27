@@ -1,7 +1,9 @@
 var gulp = require('gulp'),
 	concat =require('gulp-concat'),
 	uglify= require('gulp-uglify'),
+	jshint = require('gulp-jshint'),
 	rename = require('gulp-rename'),
+	stylish = require('jshint-stylish'),
 	ngdocs = require('suh-dgeni-ngdocs'),
 	path = require('canonical-path'),
 	PATHS = {
@@ -10,7 +12,13 @@ var gulp = require('gulp'),
 		}
 	}; 
 
-gulp.task('concat-js',function(){
+gulp.task('jshint',function(){
+	return gulp.src(PATHS.JS.SRC)
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish))
+});
+
+gulp.task('concat-js',['jshint'],function(){
 	return gulp.src(PATHS.JS.SRC)
 	  .pipe(concat('suh-external.js'))
 	  .pipe(gulp.dest('./'))

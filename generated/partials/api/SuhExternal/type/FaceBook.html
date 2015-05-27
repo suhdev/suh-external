@@ -1,0 +1,562 @@
+
+
+<a href='https://github.com///tree//../suh-external.js#L81' class='view-source pull-right uk-button uk-button-primary'>
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<div class="uk-block uk-block-primary uk-contrast ngdocs-header-block">
+  <div class="uk-container">
+    <h1 class="ngdocs-header-block-heading">Facebook</h1>
+    <header class="api-profile-header">
+      <ol class="uk-list">
+        
+        <li>
+          type in module <a href="api/SuhExternal">SuhExternal</a>
+        </li>
+      </ol>
+    </header>
+    <p>
+    
+    </p>
+  </div>
+</div>
+
+
+
+<p class="api-profile-description">
+  <p>A facebook API wrapper.</p>
+
+</p>
+
+
+
+<div>
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code>Facebook(appId);</code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        appId
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-any">any</a>
+      </td>
+      <td>
+        <p>the application id.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    
+
+  
+<h2>Methods</h2>
+<ul class="methods uk-list">
+  <li id="getPermissions">
+    <h3 class="uk-text-primary"><p><code>getPermissions();</code></p>
+
+</h3>
+    <div><p>Returns a promise that is resolved with the permissions and their status <code>granted</code> or <code>declined</code></p>
+</div>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="uk-table variables-matrix return-arguments">
+  <tr>
+    <td><a href="" class="uk-badge uk-badge-primary label type-hint type-hint-promise">Promise</a></td>
+    <td><p>an angular promise</p>
+</td>
+  </tr>
+</table>
+    
+
+  </li>
+  
+  <li id="hasPermission">
+    <h3 class="uk-text-primary"><p><code>hasPermission(either);</code></p>
+
+</h3>
+    <div><p>Returns a promise that is either resolved with a true or reject with a false, depending on the existence of the permission(s)</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        either
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-string">string</a><a href="" class="uk-badge uk-badge-primary label type-hint type-hint-array">Array.&lt;string&gt;</a>
+      </td>
+      <td>
+        <p>a string representing a permission name, or an array of strings representing permission names.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="uk-table variables-matrix return-arguments">
+  <tr>
+    <td><a href="" class="uk-badge uk-badge-primary label type-hint type-hint-promise">Promise</a></td>
+    <td><p>an angular promise</p>
+</td>
+  </tr>
+</table>
+    
+
+  </li>
+  
+  <li id="resendPermissionRequest">
+    <h3 class="uk-text-primary"><p><code>resendPermissionRequest(perms);</code></p>
+
+</h3>
+    <div><p>Resends a login request with the requested permissions, this can be useful 
+if the user didn&#39;t approve all the permissions the first time he/she logged into
+the application.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        perms
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-array">Array&lt;string&gt;</a>
+      </td>
+      <td>
+        <p>an array of permissions to request.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="login">
+    <h3 class="uk-text-primary"><p><code>login(the);</code></p>
+
+</h3>
+    <div><p>Sends a login request to Facebook, this will show a popup to go through 
+the login process.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        the
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-scope">scope</a>
+      </td>
+      <td>
+        <p>permissions to request for the app.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="logout">
+    <h3 class="uk-text-primary"><p><code>logout();</code></p>
+
+</h3>
+    <div><p>Logs the user out.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="onLogout">
+    <h3 class="uk-text-primary"><p><code>onLogout(response);</code></p>
+
+</h3>
+    <div><p>This method is invoked internally once a logout request has returned.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        response
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-object">object</a>
+      </td>
+      <td>
+        
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="getLoginStatus">
+    <h3 class="uk-text-primary"><p><code>getLoginStatus();</code></p>
+
+</h3>
+    <div><p>Request login status, this method triggers the FB api requesting a login status update
+Once it returns it triggers <a href="api/SuhExternal/type/Facebook#FBLoginStatusChange">FBLoginStatusChange</a> event.
+Any object wants to recieve the updates must add a listener to the status change.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="onLoginStatusChange">
+    <h3 class="uk-text-primary"><p><code>onLoginStatusChange();</code></p>
+
+</h3>
+    <div><p>Triggered internally upon a login status change.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="onLoaded">
+    <h3 class="uk-text-primary"><p><code>onLoaded();</code></p>
+
+</h3>
+    <div><p>Called internally once the FB api is loaded.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="__get">
+    <h3 class="uk-text-primary"><p><code>__get(url, fields);</code></p>
+
+</h3>
+    <div><p>Sends a request to Facebook OpenGraph.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>the url to send to the FB API.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        fields
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-object">object</a>
+      </td>
+      <td>
+        <p>the fields to send along with the request.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="uk-table variables-matrix return-arguments">
+  <tr>
+    <td><a href="" class="uk-badge uk-badge-primary label type-hint type-hint-promise">Promise</a></td>
+    <td><p>an angular promise.</p>
+</td>
+  </tr>
+</table>
+    
+
+  </li>
+  
+  <li id="__ui">
+    <h3 class="uk-text-primary"><p><code>__ui(url, fields);</code></p>
+
+</h3>
+    <div><p>Sends a request to Facebook OpenGraph.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>the url to send to the FB API.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        fields
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-object">object</a>
+      </td>
+      <td>
+        <p>the fields to send along with the request.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="uk-table variables-matrix return-arguments">
+  <tr>
+    <td><a href="" class="uk-badge uk-badge-primary label type-hint type-hint-promise">Promise</a></td>
+    <td><p>an angular promise.</p>
+</td>
+  </tr>
+</table>
+    
+
+  </li>
+  </ul>
+  
+<h2>Events</h2>
+<ul class="uk-list events">
+  <li id="FBLoginStatusChange">
+    <h3>FBLoginStatusChange</h3>
+    <div><p>Triggered whenever a change on the Facebook login status is introduced. 
+This includes: </p>
+<ol>
+<li>Login attempt</li>
+<li>Logout attempt</li>
+<li>Requesting login status</li>
+</ol>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">triggered</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target"><a href="api/SuhExternal/type/Facebook#listeners">listeners</a></div>
+    </div>
+    </li>
+  </ul>
+
+  
+
+
+
+  
+</div>
+
+
+
+
+
+
+<div class="ngdocs-object-notes">
+
+</div>
+
+<div class="ngdocs-object-todos">
+
+</ul>
+</div>
+<a href='https://github.com/angular/angular.js/edit//../suh-external.js?message=docs(Facebook)%3A%20describe%20your%20change...#L81' class='improve-docs uk-badge-primary uk-badge'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com///tree//../suh-external.js#L81' class='view-source pull-right uk-badge uk-badge-primary'>
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>

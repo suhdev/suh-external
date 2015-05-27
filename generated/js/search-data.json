@@ -6,9 +6,69 @@
     "members": ""
   },
   {
+    "path": "api/SuhExternal/provider/shFacebookProvider",
+    "titleWords": "shFacebookProvider",
+    "keywords": "api for html module partials provider service shfacebook shfacebookprovider suhexternal the",
+    "members": "setappid setresponsehandler setresponsewrapper"
+  },
+  {
+    "path": "api/SuhExternal/type/Facebook",
+    "titleWords": "Facebook",
+    "keywords": "api appid application facebook html id module partials shfacebook suhexternal the type wrapper",
+    "members": "__get __ui fbloginstatuschange getloginstatus getpermissions haspermission login logout onloaded onloginstatuschange onlogout resendpermissionrequest"
+  },
+  {
+    "path": "api/SuhExternal/service/shFacebook",
+    "titleWords": "shFacebook",
+    "keywords": "$get api facebook html instance instantiates module new object of partials service shfacebook suhexternal the wrapper",
+    "members": ""
+  },
+  {
+    "path": "api/SuhExternal/service/shEventEmitter",
+    "titleWords": "shEventEmitter",
+    "keywords": "api be by classes eventemitter exposing factory html inherited module other partials service sheventemitter suhexternal the to",
+    "members": ""
+  },
+  {
+    "path": "api/SuhExternal/type/EventEmitter",
+    "titleWords": "EventEmitter",
+    "keywords": "abstract an api basic be by class classes emitter emitters event eventemitter for from html implementation inherited intended is module other partials providing suhexternal this to type",
+    "members": "addeventlistener listeners removeeventlistener trigger"
+  },
+  {
+    "path": "api/SuhExternal/service/shGoogleGeocoding",
+    "titleWords": "shGoogleGeocoding",
+    "keywords": "api factory geocoding google handles html module partials requests service shgooglegeocoding suhexternal",
+    "members": ""
+  },
+  {
+    "path": "api/SuhExternal/service/shGoogleAnalytics",
+    "titleWords": "shGoogleAnalytics",
+    "keywords": "analytics api code factory google handles html module partials service shgoogleanalytics suhexternal",
+    "members": ""
+  },
+  {
     "path": "api/SuhExternal/service/shGoogleMaps",
     "titleWords": "shGoogleMaps",
     "keywords": "api connect factory google html maps module partials service shgooglemaps suhexternal to",
+    "members": ""
+  },
+  {
+    "path": "api/SuhExternal/service/shGooglePlaces",
+    "titleWords": "shGooglePlaces",
+    "keywords": "api communication factory google handles html module partials places service shgooglegeocoding shgoogleplaces suhexternal with",
+    "members": ""
+  },
+  {
+    "path": "api/SuhExternal/provider",
+    "titleWords": "provider components in SuhExternal",
+    "keywords": "api componentgroup components html in module partials provider suhexternal",
+    "members": ""
+  },
+  {
+    "path": "api/SuhExternal/type",
+    "titleWords": "type components in SuhExternal",
+    "keywords": "api componentgroup components html in module partials suhexternal type",
     "members": ""
   },
   {
