@@ -21,16 +21,6 @@ angular.module('pagesData', [])
     "area": "api",
     "path": "api/SuhExternal/service/shFacebook"
   },
-  "api/SuhExternal/service/shEventEmitter": {
-    "name": "shEventEmitter",
-    "area": "api",
-    "path": "api/SuhExternal/service/shEventEmitter"
-  },
-  "api/SuhExternal/type/EventEmitter": {
-    "name": "EventEmitter",
-    "area": "api",
-    "path": "api/SuhExternal/type/EventEmitter"
-  },
   "api/SuhExternal/service/shGoogleGeocoding": {
     "name": "shGoogleGeocoding",
     "area": "api",

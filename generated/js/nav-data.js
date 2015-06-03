@@ -26,11 +26,6 @@ angular.module('navData', [])
             "href": "api/SuhExternal/type"
           },
           {
-            "name": "EventEmitter",
-            "href": "api/SuhExternal/type/EventEmitter",
-            "type": "type"
-          },
-          {
             "name": "Facebook",
             "href": "api/SuhExternal/type/Facebook",
             "type": "type"
@@ -39,11 +34,6 @@ angular.module('navData', [])
             "name": "service",
             "type": "section",
             "href": "api/SuhExternal/service"
-          },
-          {
-            "name": "shEventEmitter",
-            "href": "api/SuhExternal/service/shEventEmitter",
-            "type": "service"
           },
           {
             "name": "shFacebook",

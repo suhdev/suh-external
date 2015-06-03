@@ -6,7 +6,7 @@
  * Handles communication with Google places API. 
  * @requires shGoogleGeocoding
  */
-angular.module('External')
+angular.module('SuhExternal')
 	.factory('shGooglePlaces', ['$q','shGoogleGeocoding', 
 	function($q,_EG){
 		var places = function(){

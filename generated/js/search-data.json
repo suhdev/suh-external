@@ -24,18 +24,6 @@
     "members": ""
   },
   {
-    "path": "api/SuhExternal/service/shEventEmitter",
-    "titleWords": "shEventEmitter",
-    "keywords": "api be by classes eventemitter exposing factory html inherited module other partials service sheventemitter suhexternal the to",
-    "members": ""
-  },
-  {
-    "path": "api/SuhExternal/type/EventEmitter",
-    "titleWords": "EventEmitter",
-    "keywords": "abstract an api basic be by class classes emitter emitters event eventemitter for from html implementation inherited intended is module other partials providing suhexternal this to type",
-    "members": "addeventlistener listeners removeeventlistener trigger"
-  },
-  {
     "path": "api/SuhExternal/service/shGoogleGeocoding",
     "titleWords": "shGoogleGeocoding",
     "keywords": "api factory geocoding google handles html module partials requests service shgooglegeocoding suhexternal",
