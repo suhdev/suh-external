@@ -16,9 +16,8 @@ angular.module('SuhExternal')
 		places.prototype = {
 			/**
 			 * @ngdoc method
-			 * @name  external.Places#init
+			 * @name  shGooglePlaces#init
 			 * @description initializes the google places service
-			 * @methodOf external.Places
 			 */
 			init:function(){
 				this.map = _EG.map;
@@ -32,8 +31,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name external.Places#performSearch
-			 * @methodOf external.Places
+			 * @name shGooglePlaces#performSearch
 			 * @description
 			 * convenience method to call the google places API
 			 * @param {String} m the method to call on the places service
@@ -48,7 +46,7 @@ angular.module('SuhExternal')
 						}else{
 							_df.resolve(r);
 						}
-					},this))
+					},this));
 				}else{
 					_df.reject();
 				}
@@ -56,7 +54,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Places#nearbySearchByBounds
+			 * @name  shGooglePlaces#nearbySearchByBounds
 			 * @description 
 			 * searches google places by a given bound
 			
@@ -68,7 +66,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Places#nearbySearchByLocation
+			 * @name  shGooglePlaces#nearbySearchByLocation
 			 * @description searches google places by a given location
 			 * @param  {float} lat [description]
 			 * @param  {float} lng [description]
@@ -82,8 +80,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Places#getPlaceDetails
-			 * @methodOf external.Places
+			 * @name  shGooglePlaces#getPlaceDetails
 			 * @description gets the details of a given place using its reference 
 			 * @param  {string} ref place reference on google places 
 			 */
@@ -94,8 +91,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Places#radarSearch
-			 * @methodOf external.Places
+			 * @name  shGooglePlaces#radarSearch
 			 * @description performs a radar search given a radar search request
 			 * @param  {object} req the radar search request
 			 */
@@ -104,8 +100,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Places#textSearch
-			 * @methodOf external.Places
+			 * @name  shGooglePlaces#textSearch
 			 * @description performs a text search given a search query
 			 * @param  {String} searchQuery the search query
 			 */

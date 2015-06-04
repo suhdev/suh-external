@@ -13,8 +13,7 @@ angular.module('SuhExternal')
 		_ea.prototype = {
 			/**
 			 * @ngdoc method
-			 * @methodOf external.Analytics
-			 * @name  external.Analytics#init
+			 * @name  shGoogleAnalytics#init
 			 * @description initializes google analytics code
 			 */
 			init:function(){
@@ -28,15 +27,14 @@ angular.module('SuhExternal')
 				// 	a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 				// 	a.addEventListener('load',function(){
 				// 		var ij = angular.element('html').injector();
-				// 		ij.get('external.Analytics')
+				// 		ij.get('shGoogleAnalytics')
 				// 			.postInit();
 				// 	});
 				// })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 			},
 			/**
 			 * @ngdoc method
-			 * @methodOf external.Analytics
-			 * @name  external.Analytics#postInit
+			 * @name  shGoogleAnalytics#postInit
 			 * @description performs post-initialization for google analytics
 			 */
 			postInit:function(){
@@ -45,8 +43,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name external.Analytics#sendEvent
-			 * @methodOf external.Analytics
+			 * @name shGoogleAnalytics#sendEvent
 			 * @description sends an event to google analytics
 			 * @param  {String} category the event category
 			 * @param  {String} action   the event action
@@ -70,5 +67,5 @@ def.resolve();
 			},
 		};
 	
-		return new _ea;
+		return new _ea();
 	}]);

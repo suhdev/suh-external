@@ -11,26 +11,6 @@ angular.module('navData', [])
         "type": "group",
         "navItems": [
           {
-            "name": "provider",
-            "type": "section",
-            "href": "api/SuhExternal/provider"
-          },
-          {
-            "name": "shFacebookProvider",
-            "href": "api/SuhExternal/provider/shFacebookProvider",
-            "type": "provider"
-          },
-          {
-            "name": "type",
-            "type": "section",
-            "href": "api/SuhExternal/type"
-          },
-          {
-            "name": "Facebook",
-            "href": "api/SuhExternal/type/Facebook",
-            "type": "type"
-          },
-          {
             "name": "service",
             "type": "section",
             "href": "api/SuhExternal/service"
@@ -59,6 +39,16 @@ angular.module('navData', [])
             "name": "shGooglePlaces",
             "href": "api/SuhExternal/service/shGooglePlaces",
             "type": "service"
+          },
+          {
+            "name": "provider",
+            "type": "section",
+            "href": "api/SuhExternal/provider"
+          },
+          {
+            "name": "shFacebookProvider",
+            "href": "api/SuhExternal/provider/shFacebookProvider",
+            "type": "provider"
           }
         ]
       }

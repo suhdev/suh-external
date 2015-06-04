@@ -7,6 +7,378 @@
  * @todo {urgent} finish documentation.
  */
 angular.module('SuhExternal',[]);
+angular.module('SuhExternal')
+	.directive('shFacebookShareCount', ['shFacebook',function (shFB) {
+		return {
+			restrict: 'A',
+			scope:false,
+			link: function ($S, $E, $A) {
+				var url = document.URL; 
+				if ($A.shFacebookShareCountUrl){
+					url = $A.shFacebookShareCountUrl; 
+				}else if ($A.shFacebookShareCount && $A.shFacebookShareCount !== ''){
+					url = $A.shFacebookShareCount; 
+				}
+				$S.shFBShareCount = 0;
+				shFB.shareCount(url)
+					.then(function(e){
+						$S.shFBShareCount = e; 
+					},function(e){
+						$S.shFBShareCount = 0; 
+					}); 
+
+			}
+		};
+	}]);
+
+/**
+ * @ngdoc service
+ * @name  shGoogleGeocoding
+ * @module SuhExternal
+ * @description Handles google geocoding API requests
+ */
+angular.module('SuhExternal')
+	.factory('shGoogleGeocoding', ['$http','$q', '$window', function($http,$q,$window){
+		var geo = function(){
+			MRL.BasicCtrl.call(this,{},[]); 
+			/**
+			 * @ngdoc property
+			 * @name shGoogleGeocoding#_d
+			 * @type {Promise}
+			 * @description holds a promise that is resolved when the API is appropriately loaded
+			 */
+			this._d = $q.defer();
+			/**
+			 * @ngdoc property
+			 * @name  shGoogleGeocoding#_initialized
+			 * @description indicates whether the API is appropriately loaded or not
+			 * @type {Boolean}
+			 */
+			this._initialized = false;
+			/**
+			 * @ngdoc property
+			 * @name shGoogleGeocoding#coder
+			 * @description holds a reference to the service geocoder used to contact Google Maps servers
+			 * @type {google.maps.Geocoder}
+			 */
+			this.coder = null;
+			/**
+			 * @ngdoc property
+			 * @name  shGoogleGeocoding#coder
+			 * @description holds a reference to the map object used to query Google Maps servers
+			 * @type {google.maps.Map}
+			 */
+			this.map = null;
+			/**
+			 * @ngdoc property
+			 * @name  shGoogleGeocoding#apiKey
+			 * @description holds the API key used to communicate with Google Maps servers
+			 * @type {String}
+			 */
+			this.apiKey = '';
+			window.onGoogleMapsLoaded = function(){
+				var ig = angular.element('html').injector();
+				ig.get('Geocoding')
+					.postInit();
+			};
+			//this.init();
+			this.postInit();
+		};
+		geo.prototype = {
+			/**
+			 * @ngdoc method
+			 * @name shGoogleGeocoding#init
+			 * @description initializes Google maps API 
+			 */
+			init:function(){
+				if (this._initialized){
+					throw _GE(0x0001,'Google Maps API already initialized');
+				}
+				var script = document.createElement('script');
+				script.type = 'text/javascript';
+				script.async = true;
+				script.src = 'http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=onGoogleMapsLoaded';
+				document.body.appendChild(script);
+
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGoogleGeocoding#postInit
+			 * @description performs post initialization of the Google Maps API.
+			 */
+			postInit:function(){
+				if (this._initialized){
+					throw _GE(0x0001,'Google Maps API already initialized');
+				}
+				this._initialized = true;
+
+				this.coder = new google.maps.Geocoder();
+				//59.338750, 18.068570
+				var latlng = new google.maps.LatLng(59.338750,18.068570);
+				var mapOptions = {
+					zoom :12,
+					center:latlng
+				};
+
+				if (jQuery('#hidden-map-canvas').length === 0)
+					jQuery('body').append('<div id="hidden-map-canvas" style="display:none;"></div>');
+				if (jQuery('#hidden-map-canvas').length > 0){
+
+					this.map = new google.maps.Map(document.getElementById('hidden-map-canvas'), mapOptions);
+
+					this.apiKey = 'AIzaSyBjleysc7ZBJdUdGgeUxTQgbMEer-yFBfU';
+				}
+				this._d.resolve();
+				//this.trigger('GoogleMapsLibLoaded',{});
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGoogleGeocoding#ready
+			 * @description returns the initialization promise of the API initialization.
+			 */
+			ready:function(){
+				return this._d.promise;
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGoogleGeocoding#geocodeAddress
+			 * @description geocode a given address using the name of the address
+			 */
+			geocodeAddress:function(address){
+				var _df = $q.defer();
+				this.coder.geocode({'address':address},
+					function(results,status){
+					if (status === google.maps.GeocoderStatus.OK){
+						_df.resolve(results);
+					}else{
+						_df.reject(status);
+					}
+				});
+				return _df.promise;
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGoogleGeocoding#reverseGeocode
+			 * @description [description]
+			 * @param  {object} latlng the longitude and latitute object to reverve geocode
+			 */
+			reverseGeocode:function(latlng){
+				var _df = $q.defer();
+				this.coder.geocode({'latLng':latlng},function(results,status){
+					if (status === google.maps.GeocoderStatus.OK){
+						_df.resolve(results);
+					}else{
+						_df.reject(status);
+					}
+				});
+				return _df.promise;
+			}
+		};
+		return new geo();
+}]);
+/**
+ * @ngdoc service
+ * @name  shGoogleAnalytics
+ * @module SuhExternal
+ * @description Handles google analytics code
+ */
+angular.module('SuhExternal')
+	.factory('shGoogleAnalytics', ['$q','$http','shTrackingCode', function ($q,$http,_TC){
+		var _ea = function(){
+			this.init();
+		};
+
+		_ea.prototype = {
+			/**
+			 * @ngdoc method
+			 * @name  shGoogleAnalytics#init
+			 * @description initializes google analytics code
+			 */
+			init:function(){
+				// var temp = this;
+				// (function(i,s,o,g,r,a,m){
+				// 	i['GoogleAnalyticsObject']=r;
+				// 	i[r]=i[r]||function(){
+				// 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
+				// 		a=s.createElement(o),
+				// 		m=s.getElementsByTagName(o)[0];
+				// 	a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				// 	a.addEventListener('load',function(){
+				// 		var ij = angular.element('html').injector();
+				// 		ij.get('shGoogleAnalytics')
+				// 			.postInit();
+				// 	});
+				// })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGoogleAnalytics#postInit
+			 * @description performs post-initialization for google analytics
+			 */
+			postInit:function(){
+				// ga('create', _TC, 'auto');  // Creates a tracker.
+				// ga('send', 'pageview');
+			},
+			/**
+			 * @ngdoc method
+			 * @name shGoogleAnalytics#sendEvent
+			 * @description sends an event to google analytics
+			 * @param  {String} category the event category
+			 * @param  {String} action   the event action
+			 * @param  {String} label    the event label
+			 * @param  {Integer} value    the event value
+			 */
+			sendEvent:function(category,action,label,value){
+				var _df = $q.defer();
+				// ga('send',{
+				// 	'hitType':'event',
+				// 	'eventCategory':category,
+				// 	'eventAction':action,
+				// 	'eventLabel':label,
+				// 	'eventValue':value,
+				// 	'hitCallback':function(){
+				// 		_df.resolve();
+				// 	}
+				// });
+def.resolve();
+				return _df.promise;
+			},
+		};
+	
+		return new _ea();
+	}]);
+/**
+ * @ngdoc service
+ * @name shGoogleMaps
+ * @module SuhExternal
+ * @description 
+ * A service to connect to Google Maps. 
+ */
+
+ angular.module('SuhExternal')
+ 	.factory('shGoogleMaps', [function () {
+ 		
+ 	
+ 		return {
+ 	
+ 		};
+ 	}]);
+/**
+ * @ngdoc service
+ * @name shGooglePlaces
+ * @module SuhExternal
+ * @description 
+ * Handles communication with Google places API. 
+ * @requires shGoogleGeocoding
+ */
+angular.module('SuhExternal')
+	.factory('shGooglePlaces', ['$q','shGoogleGeocoding', 
+	function($q,_EG){
+		var places = function(){
+			this.init();
+		};
+
+		places.prototype = {
+			/**
+			 * @ngdoc method
+			 * @name  shGooglePlaces#init
+			 * @description initializes the google places service
+			 */
+			init:function(){
+				this.map = _EG.map;
+				this.bounds = new google.maps.LatLngBounds(
+					new google.maps.LatLng(59.224443, 17.776862),
+					new google.maps.LatLng(59.427841, 18.198229)
+
+					);
+				this.places = new google.maps.places.PlacesService(this.map);
+				this._initialized = true;
+			},
+			/**
+			 * @ngdoc method
+			 * @name shGooglePlaces#performSearch
+			 * @description
+			 * convenience method to call the google places API
+			 * @param {String} m the method to call on the places service
+			 * @param {object} req the request object
+			 */
+			performSearch:function(m,req){
+				var _df = $q.defer();
+				if (this._initialized){
+					this.places[m](req,jQuery.proxy(function(r,status){
+						if (status !== google.maps.places.PlacesServiceStatus.OK){
+							_df.reject(status);
+						}else{
+							_df.resolve(r);
+						}
+					},this));
+				}else{
+					_df.reject();
+				}
+				return _df.promise;
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGooglePlaces#nearbySearchByBounds
+			 * @description 
+			 * searches google places by a given bound
+			
+			 */
+			nearbySearchByBounds:function(latLngBounds){
+				return this.performSearch('nearbySearch',{
+					bounds:latLngBounds,
+				});
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGooglePlaces#nearbySearchByLocation
+			 * @description searches google places by a given location
+			 * @param  {float} lat [description]
+			 * @param  {float} lng [description]
+			 * @param  {float} rad [description]
+			 */
+			nearbySearchByLocation:function(lat,lng,rad){
+				return this.performSearch('nearbySearch',{
+					location:new google.maps.LatLng(lat,lng),
+					radius:rad
+				});
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGooglePlaces#getPlaceDetails
+			 * @description gets the details of a given place using its reference 
+			 * @param  {string} ref place reference on google places 
+			 */
+			getDetails:function(ref){
+				return this.performSearch('getDetails',{
+					reference:ref
+				});
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGooglePlaces#radarSearch
+			 * @description performs a radar search given a radar search request
+			 * @param  {object} req the radar search request
+			 */
+			radarSearch:function(req){
+				return this.performSearch('radarSearch',req);
+			},
+			/**
+			 * @ngdoc method
+			 * @name  shGooglePlaces#textSearch
+			 * @description performs a text search given a search query
+			 * @param  {String} searchQuery the search query
+			 */
+			textSearch:function(searchQuery){
+				return this.performSearch('textSearch',{
+					query:searchQuery,
+					bounds:this.bounds
+				});
+			}
+		};
+
+		return new places();
+}]);
 /** 
  * @ngdoc provider
  * @module SuhExternal
@@ -78,24 +450,12 @@ angular.module('SuhExternal')
 			appId = aId;
 		};
 
-		/**
-		 * @ngdoc type
-		 * @name Facebook
-		 * @module SuhExternal
-		 * @param {any} appId the application id. 
-		 * @constructs
-		 * @fires {FBLoginStatusChange}
-		 * @fires {FBLogout}
-		 * @description 
-		 * A facebook API wrapper. 
-		 */
-
 		 /**
 		  * @ngdoc event
-		  * @name Facebook#FBLoginStatusChange
+		  * @name shFacebook#FBLoginStatusChange
 		  * @module SuhExternal
 		  * @type {object}
-		  * @eventType triggered on {@link Facebook#listeners listeners}
+		  * @eventType triggered on {@link shFacebook#listeners listeners}
 		  * @param {type} type the event type `FBLoginStatusChange`
 		  * @param {object} data an object representing the change 
 		  * @description
@@ -106,6 +466,8 @@ angular.module('SuhExternal')
 		  * 2. Logout attempt
 		  * 3. Requesting login status
 		  */
+
+		 
 
 
 		var shFacebook = function shFacebook(aId) {
@@ -135,8 +497,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#getPermissions
-			 * @methodOf Facebook
+			 * @name shFacebook#getPermissions
 			 * @module SuhExternal
 			 * @returns {Promise} an angular promise
 			 * @description
@@ -147,7 +508,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#hasPermission
+			 * @name shFacebook#hasPermission
 			 * @module SuhExternal 
 			 * @param {string|Array<string>} either a string representing a permission name, or an array of strings representing permission names. 
 			 * @returns {Promise} an angular promise
@@ -179,7 +540,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#resendPermissionRequest
+			 * @name shFacebook#resendPermissionRequest
 			 * @module SuhExternal
 			 * @param {Array<string>} perms an array of permissions to request. 
 			 * @description
@@ -195,7 +556,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#login
+			 * @name shFacebook#login
 			 * @module SuhExternal
 			 * @param {scope} the permissions to request for the app. 
 			 * @description
@@ -208,7 +569,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#logout
+			 * @name shFacebook#logout
 			 * @module SuhExternal
 			 * @description 
 			 * Logs the user out.
@@ -218,7 +579,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#onLogout
+			 * @name shFacebook#onLogout
 			 * @module SuhExternal
 			 * @param {object} response
 			 * @description
@@ -237,11 +598,11 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#getLoginStatus
+			 * @name shFacebook#getLoginStatus
 			 * @module SuhExternal
 			 * @description
 			 * Request login status, this method triggers the FB api requesting a login status update
-			 * Once it returns it triggers {@link Facebook#FBLoginStatusChange FBLoginStatusChange} event.
+			 * Once it returns it triggers {@link shFacebook#FBLoginStatusChange FBLoginStatusChange} event.
 			 * Any object wants to recieve the updates must add a listener to the status change. 
 			 */
 			getLoginStatus:function(){
@@ -249,7 +610,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#onLoginStatusChange
+			 * @name shFacebook#onLoginStatusChange
 			 * @module SuhExternal
 			 * @description
 			 * Triggered internally upon a login status change. 
@@ -278,7 +639,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#onLoaded
+			 * @name shFacebook#onLoaded
 			 * @module SuhExternal
 			 * @description
 			 * Called internally once the FB api is loaded. 
@@ -291,7 +652,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#__get
+			 * @name shFacebook#__get
 			 * @module SuhExternal
 			 * @param {string} url the url to send to the FB API. 
 			 * @param {object} fields the fields to send along with the request. 
@@ -307,7 +668,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#__ui
+			 * @name shFacebook#__ui
 			 * @module SuhExternal
 			 * @param {string} url the url to send to the FB API. 
 			 * @param {object} fields the fields to send along with the request. 
@@ -391,6 +752,17 @@ angular.module('SuhExternal')
 	  				.replace(/__ACTION_TYPE__/,a)
 	  				.replace(/__REDIRECT_URL__/,u);
 			},
+			shareCount:function(url){
+				var def = $Q.defer();
+				$H.get('https://graph.facebook.com/fql?q=SELECT%20like_count,%20total_count,%20share_count,%20click_count,%20comment_count%20FROM%20link_stat%20WHERE%20url%20=%20%27'+url+'%27')
+					.success(function(t){
+						def.resolve(t.share_count || 0);
+					})
+					.error(function(e){
+						def.resolve(0); 
+					});
+				return def.promise;
+			},
 		});
 		shFacebook.prototype.constructor = _EM;
 		
@@ -398,7 +770,9 @@ angular.module('SuhExternal')
 		 * @ngdoc service
 		 * @name shFacebook
 		 * @module SuhExternal
-		 * @returns {Facebook} a new instance of the `Facebook` API wrapper object. 
+		 * @property {Array} listeners 
+		 * @fires {FBLoginStatusChange}
+		 * @fires {FBLogout}
 		 * @description 
 		 * Instantiates a Facebook API wrapper. 
 		 */
@@ -406,369 +780,3 @@ angular.module('SuhExternal')
 			return new shFacebook(appId||aId);
 		}];
 	}]);
-
-/**
- * @ngdoc service
- * @name  shGoogleGeocoding
- * @module SuhExternal
- * @description Handles google geocoding API requests
- */
-angular.module('SuhExternal')
-	.factory('shGoogleGeocoding', ['$http','$q', '$window', function($http,$q,$window){
-		var geo = function(){
-			MRL.BasicCtrl.call(this,{},[]); 
-			/**
-			 * @ngdoc property
-			 * @name external.Geocoding#_d
-			 * @propertyOf external.Geocoding
-			 * @type {Promise}
-			 * @description holds a promise that is resolved when the API is appropriately loaded
-			 */
-			this._d = $q.defer();
-			/**
-			 * @ngdoc property
-			 * @name  external.Geocoding#_initialized
-			 * @propertyOf external.Geocoding
-			 * @description indicates whether the API is appropriately loaded or not
-			 * @type {Boolean}
-			 */
-			this._initialized = false;
-			/**
-			 * @ngdoc property
-			 * @name external.Geocoding#coder
-			 * @propertyOf external.Geocoding
-			 * @description holds a reference to the service geocoder used to contact Google Maps servers
-			 * @type {google.maps.Geocoder}
-			 */
-			this.coder = null;
-			/**
-			 * @ngdoc property
-			 * @name  external.Geocoding#coder
-			 * @propertyOf external.Geocoding
-			 * @description holds a reference to the map object used to query Google Maps servers
-			 * @type {google.maps.Map}
-			 */
-			this.map = null;
-			/**
-			 * @ngdoc property
-			 * @name  external.Geocoding#apiKey
-			 * @propertyOf external.Geocoding
-			 * @description holds the API key used to communicate with Google Maps servers
-			 * @type {String}
-			 */
-			this.apiKey = '';
-			window.onGoogleMapsLoaded = function(){
-				var ig = angular.element('html').injector();
-				ig.get('external.Geocoding')
-					.postInit();
-			};
-			//this.init();
-			this.postInit();
-		};
-		geo.prototype = {
-			/**
-			 * @ngdoc method
-			 * @name external.Geocoding#init
-			 * @methodOf external.Geocoding
-			 * @description initializes Google maps API 
-			 */
-			init:function(){
-				if (this._initialized){
-					throw _GE(0x0001,'Google Maps API already initialized');
-				}
-				var script = document.createElement('script');
-				script.type = 'text/javascript';
-				script.async = true;
-				script.src = 'http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=onGoogleMapsLoaded';
-				document.body.appendChild(script);
-
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Geocoding#postInit
-			 * @methodOf external.Geocoding
-			 * @description performs post initialization of the Google Maps API.
-			 */
-			postInit:function(){
-				if (this._initialized){
-					throw _GE(0x0001,'Google Maps API already initialized');
-				}
-				this._initialized = true;
-
-				this.coder = new google.maps.Geocoder();
-				//59.338750, 18.068570
-				var latlng = new google.maps.LatLng(59.338750,18.068570);
-				var mapOptions = {
-					zoom :12,
-					center:latlng
-				};
-
-				if (jQuery('#hidden-map-canvas').length == 0)
-					jQuery('body').append('<div id="hidden-map-canvas" style="display:none;"></div>');
-				if (jQuery('#hidden-map-canvas').length > 0){
-
-					this.map = new google.maps.Map(document.getElementById('hidden-map-canvas'), mapOptions);
-
-					this.apiKey = 'AIzaSyBjleysc7ZBJdUdGgeUxTQgbMEer-yFBfU';
-				}
-				this._d.resolve();
-				//this.trigger('GoogleMapsLibLoaded',{});
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Geocoding#ready
-			 * @methodOf external.Geocoding
-			 * @description returns the initialization promise of the API initialization.
-			 */
-			ready:function(){
-				return this._d.promise;
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Geocoding#geocodeAddress
-			 * @methodOf external.Geocoding
-			 * @description geocode a given address using the name of the address
-			 */
-			geocodeAddress:function(address){
-				var _df = $q.defer();
-				this.coder.geocode({'address':address},
-					function(results,status){
-					if (status == google.maps.GeocoderStatus.OK){
-						_df.resolve(results);
-					}else{
-						_df.reject(status);
-					}
-				});
-				return _df.promise;
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Geocoding#reverseGeocode
-			 * @description [description]
-			 * @param  {object} latlng the longitude and latitute object to reverve geocode
-			 */
-			reverseGeocode:function(latlng){
-				var _df = $q.defer();
-				this.coder.geocode({'latLng':latlng},function(results,status){
-					if (status == google.maps.GeocoderStatus.OK){
-						_df.resolve(results);
-					}else{
-						_df.reject(status);
-					}
-				});
-				return _df.promise;
-			}
-		};
-		return new geo();
-}]);
-/**
- * @ngdoc service
- * @name  shGoogleAnalytics
- * @module SuhExternal
- * @description Handles google analytics code
- */
-angular.module('SuhExternal')
-	.factory('shGoogleAnalytics', ['$q','$http','shTrackingCode', function ($q,$http,_TC){
-		var _ea = function(){
-			this.init();
-		};
-
-		_ea.prototype = {
-			/**
-			 * @ngdoc method
-			 * @methodOf external.Analytics
-			 * @name  external.Analytics#init
-			 * @description initializes google analytics code
-			 */
-			init:function(){
-				// var temp = this;
-				// (function(i,s,o,g,r,a,m){
-				// 	i['GoogleAnalyticsObject']=r;
-				// 	i[r]=i[r]||function(){
-				// 		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
-				// 		a=s.createElement(o),
-				// 		m=s.getElementsByTagName(o)[0];
-				// 	a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-				// 	a.addEventListener('load',function(){
-				// 		var ij = angular.element('html').injector();
-				// 		ij.get('external.Analytics')
-				// 			.postInit();
-				// 	});
-				// })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			},
-			/**
-			 * @ngdoc method
-			 * @methodOf external.Analytics
-			 * @name  external.Analytics#postInit
-			 * @description performs post-initialization for google analytics
-			 */
-			postInit:function(){
-				// ga('create', _TC, 'auto');  // Creates a tracker.
-				// ga('send', 'pageview');
-			},
-			/**
-			 * @ngdoc method
-			 * @name external.Analytics#sendEvent
-			 * @methodOf external.Analytics
-			 * @description sends an event to google analytics
-			 * @param  {String} category the event category
-			 * @param  {String} action   the event action
-			 * @param  {String} label    the event label
-			 * @param  {Integer} value    the event value
-			 */
-			sendEvent:function(category,action,label,value){
-				var _df = $q.defer();
-				// ga('send',{
-				// 	'hitType':'event',
-				// 	'eventCategory':category,
-				// 	'eventAction':action,
-				// 	'eventLabel':label,
-				// 	'eventValue':value,
-				// 	'hitCallback':function(){
-				// 		_df.resolve();
-				// 	}
-				// });
-def.resolve();
-				return _df.promise;
-			},
-		};
-	
-		return new _ea;
-	}]);
-/**
- * @ngdoc service
- * @name shGoogleMaps
- * @module SuhExternal
- * @description 
- * A service to connect to Google Maps. 
- */
-
- angular.module('SuhExternal')
- 	.factory('shGoogleMaps', [function () {
- 		
- 	
- 		return {
- 	
- 		};
- 	}]);
-/**
- * @ngdoc service
- * @name shGooglePlaces
- * @module SuhExternal
- * @description 
- * Handles communication with Google places API. 
- * @requires shGoogleGeocoding
- */
-angular.module('SuhExternal')
-	.factory('shGooglePlaces', ['$q','shGoogleGeocoding', 
-	function($q,_EG){
-		var places = function(){
-			this.init();
-		};
-
-		places.prototype = {
-			/**
-			 * @ngdoc method
-			 * @name  external.Places#init
-			 * @description initializes the google places service
-			 * @methodOf external.Places
-			 */
-			init:function(){
-				this.map = _EG.map;
-				this.bounds = new google.maps.LatLngBounds(
-					new google.maps.LatLng(59.224443, 17.776862),
-					new google.maps.LatLng(59.427841, 18.198229)
-
-					);
-				this.places = new google.maps.places.PlacesService(this.map);
-				this._initialized = true;
-			},
-			/**
-			 * @ngdoc method
-			 * @name external.Places#performSearch
-			 * @methodOf external.Places
-			 * @description
-			 * convenience method to call the google places API
-			 * @param {String} m the method to call on the places service
-			 * @param {object} req the request object
-			 */
-			performSearch:function(m,req){
-				var _df = $q.defer();
-				if (this._initialized){
-					this.places[m](req,jQuery.proxy(function(r,status){
-						if (status !== google.maps.places.PlacesServiceStatus.OK){
-							_df.reject(status);
-						}else{
-							_df.resolve(r);
-						}
-					},this))
-				}else{
-					_df.reject();
-				}
-				return _df.promise;
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Places#nearbySearchByBounds
-			 * @description 
-			 * searches google places by a given bound
-			
-			 */
-			nearbySearchByBounds:function(latLngBounds){
-				return this.performSearch('nearbySearch',{
-					bounds:latLngBounds,
-				});
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Places#nearbySearchByLocation
-			 * @description searches google places by a given location
-			 * @param  {float} lat [description]
-			 * @param  {float} lng [description]
-			 * @param  {float} rad [description]
-			 */
-			nearbySearchByLocation:function(lat,lng,rad){
-				return this.performSearch('nearbySearch',{
-					location:new google.maps.LatLng(lat,lng),
-					radius:rad
-				});
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Places#getPlaceDetails
-			 * @methodOf external.Places
-			 * @description gets the details of a given place using its reference 
-			 * @param  {string} ref place reference on google places 
-			 */
-			getDetails:function(ref){
-				return this.performSearch('getDetails',{
-					reference:ref
-				});
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Places#radarSearch
-			 * @methodOf external.Places
-			 * @description performs a radar search given a radar search request
-			 * @param  {object} req the radar search request
-			 */
-			radarSearch:function(req){
-				return this.performSearch('radarSearch',req);
-			},
-			/**
-			 * @ngdoc method
-			 * @name  external.Places#textSearch
-			 * @methodOf external.Places
-			 * @description performs a text search given a search query
-			 * @param  {String} searchQuery the search query
-			 */
-			textSearch:function(searchQuery){
-				return this.performSearch('textSearch',{
-					query:searchQuery,
-					bounds:this.bounds
-				});
-			}
-		};
-
-		return new places();
-}]);

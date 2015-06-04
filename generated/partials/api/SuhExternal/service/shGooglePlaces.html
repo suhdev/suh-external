@@ -1,6 +1,6 @@
 
 
-<a href='https://github.com///tree//../suh-external.js#L654' class='view-source pull-right uk-button uk-button-primary'>
+<a href='https://github.com///tree//../suh-external.js#L266' class='view-source pull-right uk-button uk-button-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>
 
@@ -46,6 +46,328 @@
   
 
   
+<h2>Methods</h2>
+<ul class="methods uk-list">
+  <li id="init">
+    <hr class="uk-grid-divider">
+    <h3 class="uk-text-primary"><p><code>init();</code></p>
+
+</h3>
+    <div><p>initializes the google places service</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="performSearch">
+    <hr class="uk-grid-divider">
+    <h3 class="uk-text-primary"><p><code>performSearch(m, req);</code></p>
+
+</h3>
+    <div><p>convenience method to call the google places API</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        m
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-string">String</a>
+      </td>
+      <td>
+        <p>the method to call on the places service</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        req
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-object">object</a>
+      </td>
+      <td>
+        <p>the request object</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="nearbySearchByBounds">
+    <hr class="uk-grid-divider">
+    <h3 class="uk-text-primary"><p><code>nearbySearchByBounds();</code></p>
+
+</h3>
+    <div><p>searches google places by a given bound</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="nearbySearchByLocation">
+    <hr class="uk-grid-divider">
+    <h3 class="uk-text-primary"><p><code>nearbySearchByLocation(lat, lng, rad);</code></p>
+
+</h3>
+    <div><p>searches google places by a given location</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        lat
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-float">float</a>
+      </td>
+      <td>
+        <p>[description]</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        lng
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-float">float</a>
+      </td>
+      <td>
+        <p>[description]</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        rad
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-float">float</a>
+      </td>
+      <td>
+        <p>[description]</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="getPlaceDetails">
+    <hr class="uk-grid-divider">
+    <h3 class="uk-text-primary"><p><code>getPlaceDetails(ref);</code></p>
+
+</h3>
+    <div><p>gets the details of a given place using its reference</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        ref
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>place reference on google places</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="radarSearch">
+    <hr class="uk-grid-divider">
+    <h3 class="uk-text-primary"><p><code>radarSearch(req);</code></p>
+
+</h3>
+    <div><p>performs a radar search given a radar search request</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        req
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-object">object</a>
+      </td>
+      <td>
+        <p>the radar search request</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="textSearch">
+    <hr class="uk-grid-divider">
+    <h3 class="uk-text-primary"><p><code>textSearch(searchQuery);</code></p>
+
+</h3>
+    <div><p>performs a text search given a search query</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="uk-table">
+    <thead>
+        <tr>
+          <th class="uk-width-2-10">Param</th>
+          <th class="uk-width-1-10">Type</th>
+          <th class="uk-width-7-10">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    <tr>
+      <td>
+        searchQuery
+        
+        
+      </td>
+      <td>
+        <a href="" class="uk-badge uk-badge-primary label type-hint type-hint-string">String</a>
+      </td>
+      <td>
+        <p>the search query</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
   
   
   <div class="ngdocs-object-todos">
@@ -72,7 +394,7 @@
 </ul>
 </div>
 
-<a href='https://github.com/angular/angular.js/edit//../suh-external.js?message=docs(shGooglePlaces)%3A%20describe%20your%20change...#L654' class='improve-docs uk-badge-primary uk-badge'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
-<a href='https://github.com///tree//../suh-external.js#L654' class='view-source pull-right uk-badge uk-badge-primary'>
+<a href='https://github.com/angular/angular.js/edit//../suh-external.js?message=docs(shGooglePlaces)%3A%20describe%20your%20change...#L266' class='improve-docs uk-badge-primary uk-badge'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this Doc</a>
+<a href='https://github.com///tree//../suh-external.js#L266' class='view-source pull-right uk-badge uk-badge-primary'>
   <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
 </a>

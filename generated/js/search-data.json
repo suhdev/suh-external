@@ -6,34 +6,16 @@
     "members": ""
   },
   {
-    "path": "api/SuhExternal/provider/shFacebookProvider",
-    "titleWords": "shFacebookProvider",
-    "keywords": "api for html module partials provider service shfacebook shfacebookprovider suhexternal the",
-    "members": "setappid setresponsehandler setresponsewrapper"
-  },
-  {
-    "path": "api/SuhExternal/type/Facebook",
-    "titleWords": "Facebook",
-    "keywords": "api appid application facebook html id module partials shfacebook suhexternal the type wrapper",
-    "members": "__get __ui fbloginstatuschange getloginstatus getpermissions haspermission login logout onloaded onloginstatuschange onlogout resendpermissionrequest"
-  },
-  {
-    "path": "api/SuhExternal/service/shFacebook",
-    "titleWords": "shFacebook",
-    "keywords": "$get api facebook html instance instantiates module new object of partials service shfacebook suhexternal the wrapper",
-    "members": ""
-  },
-  {
     "path": "api/SuhExternal/service/shGoogleGeocoding",
     "titleWords": "shGoogleGeocoding",
     "keywords": "api factory geocoding google handles html module partials requests service shgooglegeocoding suhexternal",
-    "members": ""
+    "members": "_d _initialized apikey coder geocodeaddress init postinit ready reversegeocode"
   },
   {
     "path": "api/SuhExternal/service/shGoogleAnalytics",
     "titleWords": "shGoogleAnalytics",
     "keywords": "analytics api code factory google handles html module partials service shgoogleanalytics suhexternal",
-    "members": ""
+    "members": "init postinit sendevent"
   },
   {
     "path": "api/SuhExternal/service/shGoogleMaps",
@@ -45,24 +27,30 @@
     "path": "api/SuhExternal/service/shGooglePlaces",
     "titleWords": "shGooglePlaces",
     "keywords": "api communication factory google handles html module partials places service shgooglegeocoding shgoogleplaces suhexternal with",
+    "members": "getplacedetails init nearbysearchbybounds nearbysearchbylocation performsearch radarsearch textsearch"
+  },
+  {
+    "path": "api/SuhExternal/provider/shFacebookProvider",
+    "titleWords": "shFacebookProvider",
+    "keywords": "api for html module partials provider service shfacebook shfacebookprovider suhexternal the",
+    "members": "setappid setresponsehandler setresponsewrapper"
+  },
+  {
+    "path": "api/SuhExternal/service/shFacebook",
+    "titleWords": "shFacebook",
+    "keywords": "$get api facebook html instantiates listeners module partials service shfacebook suhexternal wrapper",
+    "members": "__get __ui fbloginstatuschange getloginstatus getpermissions haspermission listeners login logout onloaded onloginstatuschange onlogout resendpermissionrequest"
+  },
+  {
+    "path": "api/SuhExternal/service",
+    "titleWords": "service components in SuhExternal",
+    "keywords": "api componentgroup components html in module partials service suhexternal",
     "members": ""
   },
   {
     "path": "api/SuhExternal/provider",
     "titleWords": "provider components in SuhExternal",
     "keywords": "api componentgroup components html in module partials provider suhexternal",
-    "members": ""
-  },
-  {
-    "path": "api/SuhExternal/type",
-    "titleWords": "type components in SuhExternal",
-    "keywords": "api componentgroup components html in module partials suhexternal type",
-    "members": ""
-  },
-  {
-    "path": "api/SuhExternal/service",
-    "titleWords": "service components in SuhExternal",
-    "keywords": "api componentgroup components html in module partials service suhexternal",
     "members": ""
   }
 ]

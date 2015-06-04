@@ -10,47 +10,42 @@ angular.module('SuhExternal')
 			MRL.BasicCtrl.call(this,{},[]); 
 			/**
 			 * @ngdoc property
-			 * @name external.Geocoding#_d
-			 * @propertyOf external.Geocoding
+			 * @name shGoogleGeocoding#_d
 			 * @type {Promise}
 			 * @description holds a promise that is resolved when the API is appropriately loaded
 			 */
 			this._d = $q.defer();
 			/**
 			 * @ngdoc property
-			 * @name  external.Geocoding#_initialized
-			 * @propertyOf external.Geocoding
+			 * @name  shGoogleGeocoding#_initialized
 			 * @description indicates whether the API is appropriately loaded or not
 			 * @type {Boolean}
 			 */
 			this._initialized = false;
 			/**
 			 * @ngdoc property
-			 * @name external.Geocoding#coder
-			 * @propertyOf external.Geocoding
+			 * @name shGoogleGeocoding#coder
 			 * @description holds a reference to the service geocoder used to contact Google Maps servers
 			 * @type {google.maps.Geocoder}
 			 */
 			this.coder = null;
 			/**
 			 * @ngdoc property
-			 * @name  external.Geocoding#coder
-			 * @propertyOf external.Geocoding
+			 * @name  shGoogleGeocoding#coder
 			 * @description holds a reference to the map object used to query Google Maps servers
 			 * @type {google.maps.Map}
 			 */
 			this.map = null;
 			/**
 			 * @ngdoc property
-			 * @name  external.Geocoding#apiKey
-			 * @propertyOf external.Geocoding
+			 * @name  shGoogleGeocoding#apiKey
 			 * @description holds the API key used to communicate with Google Maps servers
 			 * @type {String}
 			 */
 			this.apiKey = '';
 			window.onGoogleMapsLoaded = function(){
 				var ig = angular.element('html').injector();
-				ig.get('external.Geocoding')
+				ig.get('Geocoding')
 					.postInit();
 			};
 			//this.init();
@@ -59,8 +54,7 @@ angular.module('SuhExternal')
 		geo.prototype = {
 			/**
 			 * @ngdoc method
-			 * @name external.Geocoding#init
-			 * @methodOf external.Geocoding
+			 * @name shGoogleGeocoding#init
 			 * @description initializes Google maps API 
 			 */
 			init:function(){
@@ -76,8 +70,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Geocoding#postInit
-			 * @methodOf external.Geocoding
+			 * @name  shGoogleGeocoding#postInit
 			 * @description performs post initialization of the Google Maps API.
 			 */
 			postInit:function(){
@@ -94,7 +87,7 @@ angular.module('SuhExternal')
 					center:latlng
 				};
 
-				if (jQuery('#hidden-map-canvas').length == 0)
+				if (jQuery('#hidden-map-canvas').length === 0)
 					jQuery('body').append('<div id="hidden-map-canvas" style="display:none;"></div>');
 				if (jQuery('#hidden-map-canvas').length > 0){
 
@@ -107,8 +100,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Geocoding#ready
-			 * @methodOf external.Geocoding
+			 * @name  shGoogleGeocoding#ready
 			 * @description returns the initialization promise of the API initialization.
 			 */
 			ready:function(){
@@ -116,15 +108,14 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Geocoding#geocodeAddress
-			 * @methodOf external.Geocoding
+			 * @name  shGoogleGeocoding#geocodeAddress
 			 * @description geocode a given address using the name of the address
 			 */
 			geocodeAddress:function(address){
 				var _df = $q.defer();
 				this.coder.geocode({'address':address},
 					function(results,status){
-					if (status == google.maps.GeocoderStatus.OK){
+					if (status === google.maps.GeocoderStatus.OK){
 						_df.resolve(results);
 					}else{
 						_df.reject(status);
@@ -134,14 +125,14 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name  external.Geocoding#reverseGeocode
+			 * @name  shGoogleGeocoding#reverseGeocode
 			 * @description [description]
 			 * @param  {object} latlng the longitude and latitute object to reverve geocode
 			 */
 			reverseGeocode:function(latlng){
 				var _df = $q.defer();
 				this.coder.geocode({'latLng':latlng},function(results,status){
-					if (status == google.maps.GeocoderStatus.OK){
+					if (status === google.maps.GeocoderStatus.OK){
 						_df.resolve(results);
 					}else{
 						_df.reject(status);

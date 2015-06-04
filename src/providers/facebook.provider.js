@@ -69,24 +69,12 @@ angular.module('SuhExternal')
 			appId = aId;
 		};
 
-		/**
-		 * @ngdoc type
-		 * @name Facebook
-		 * @module SuhExternal
-		 * @param {any} appId the application id. 
-		 * @constructs
-		 * @fires {FBLoginStatusChange}
-		 * @fires {FBLogout}
-		 * @description 
-		 * A facebook API wrapper. 
-		 */
-
 		 /**
 		  * @ngdoc event
-		  * @name Facebook#FBLoginStatusChange
+		  * @name shFacebook#FBLoginStatusChange
 		  * @module SuhExternal
 		  * @type {object}
-		  * @eventType triggered on {@link Facebook#listeners listeners}
+		  * @eventType triggered on {@link shFacebook#listeners listeners}
 		  * @param {type} type the event type `FBLoginStatusChange`
 		  * @param {object} data an object representing the change 
 		  * @description
@@ -97,6 +85,8 @@ angular.module('SuhExternal')
 		  * 2. Logout attempt
 		  * 3. Requesting login status
 		  */
+
+		 
 
 
 		var shFacebook = function shFacebook(aId) {
@@ -126,8 +116,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#getPermissions
-			 * @methodOf Facebook
+			 * @name shFacebook#getPermissions
 			 * @module SuhExternal
 			 * @returns {Promise} an angular promise
 			 * @description
@@ -138,7 +127,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#hasPermission
+			 * @name shFacebook#hasPermission
 			 * @module SuhExternal 
 			 * @param {string|Array<string>} either a string representing a permission name, or an array of strings representing permission names. 
 			 * @returns {Promise} an angular promise
@@ -170,7 +159,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#resendPermissionRequest
+			 * @name shFacebook#resendPermissionRequest
 			 * @module SuhExternal
 			 * @param {Array<string>} perms an array of permissions to request. 
 			 * @description
@@ -186,7 +175,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#login
+			 * @name shFacebook#login
 			 * @module SuhExternal
 			 * @param {scope} the permissions to request for the app. 
 			 * @description
@@ -199,7 +188,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#logout
+			 * @name shFacebook#logout
 			 * @module SuhExternal
 			 * @description 
 			 * Logs the user out.
@@ -209,7 +198,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#onLogout
+			 * @name shFacebook#onLogout
 			 * @module SuhExternal
 			 * @param {object} response
 			 * @description
@@ -228,11 +217,11 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#getLoginStatus
+			 * @name shFacebook#getLoginStatus
 			 * @module SuhExternal
 			 * @description
 			 * Request login status, this method triggers the FB api requesting a login status update
-			 * Once it returns it triggers {@link Facebook#FBLoginStatusChange FBLoginStatusChange} event.
+			 * Once it returns it triggers {@link shFacebook#FBLoginStatusChange FBLoginStatusChange} event.
 			 * Any object wants to recieve the updates must add a listener to the status change. 
 			 */
 			getLoginStatus:function(){
@@ -240,7 +229,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#onLoginStatusChange
+			 * @name shFacebook#onLoginStatusChange
 			 * @module SuhExternal
 			 * @description
 			 * Triggered internally upon a login status change. 
@@ -269,7 +258,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#onLoaded
+			 * @name shFacebook#onLoaded
 			 * @module SuhExternal
 			 * @description
 			 * Called internally once the FB api is loaded. 
@@ -282,7 +271,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#__get
+			 * @name shFacebook#__get
 			 * @module SuhExternal
 			 * @param {string} url the url to send to the FB API. 
 			 * @param {object} fields the fields to send along with the request. 
@@ -298,7 +287,7 @@ angular.module('SuhExternal')
 			},
 			/**
 			 * @ngdoc method
-			 * @name Facebook#__ui
+			 * @name shFacebook#__ui
 			 * @module SuhExternal
 			 * @param {string} url the url to send to the FB API. 
 			 * @param {object} fields the fields to send along with the request. 
@@ -382,6 +371,17 @@ angular.module('SuhExternal')
 	  				.replace(/__ACTION_TYPE__/,a)
 	  				.replace(/__REDIRECT_URL__/,u);
 			},
+			shareCount:function(url){
+				var def = $Q.defer();
+				$H.get('https://graph.facebook.com/fql?q=SELECT%20like_count,%20total_count,%20share_count,%20click_count,%20comment_count%20FROM%20link_stat%20WHERE%20url%20=%20%27'+url+'%27')
+					.success(function(t){
+						def.resolve(t.share_count || 0);
+					})
+					.error(function(e){
+						def.resolve(0); 
+					});
+				return def.promise;
+			},
 		});
 		shFacebook.prototype.constructor = _EM;
 		
@@ -389,7 +389,9 @@ angular.module('SuhExternal')
 		 * @ngdoc service
 		 * @name shFacebook
 		 * @module SuhExternal
-		 * @returns {Facebook} a new instance of the `Facebook` API wrapper object. 
+		 * @property {Array} listeners 
+		 * @fires {FBLoginStatusChange}
+		 * @fires {FBLogout}
 		 * @description 
 		 * Instantiates a Facebook API wrapper. 
 		 */
